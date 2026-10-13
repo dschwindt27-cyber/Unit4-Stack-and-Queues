@@ -10,7 +10,7 @@ public class ArrayStack<T> implements Stack<T> {
 
     @Override
     public void push(T item) {
-        // TODO: If the array is full, double its capacity; then store item at index n and increment n.
+        // TODO: If the array is full, double its capacity; then store item at index n and increment n
         if (n == items.length) {
             T[] newItems = (T[]) new Object[items.length * 2];
             for (int i = 0; i < n; i++) {
@@ -23,7 +23,7 @@ public class ArrayStack<T> implements Stack<T> {
 
     @Override
     public T pop() {
-        // TODO: Decrement n, save and return that item, and set the popped slot to null to avoid loitering.
+        // TODO: Decrement n, save and return that item, and set the popped slot to null to avoid loitering
         if (isEmpty()) return null;
         T item = items[--n];
         items[n] = null;
