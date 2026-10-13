@@ -11,24 +11,35 @@ public class ArrayStack<T> implements Stack<T> {
     @Override
     public void push(T item) {
         // TODO: If the array is full, double its capacity; then store item at index n and increment n.
+        if (n == items.length) {
+            T[] newItems = (T[]) new Object[items.length * 2];
+            for (int i = 0; i < n; i++) {
+                newItems[i] = items[i];
+            }
+            items = newItems;
+        }
+        items[n++] = item;
     }
 
     @Override
     public T pop() {
         // TODO: Decrement n, save and return that item, and set the popped slot to null to avoid loitering.
-        return null;
+        if (isEmpty()) return null;
+        T item = items[--n];
+        items[n] = null;
+        return item;
     }
 
     @Override
     public boolean isEmpty() {
         // TODO: Return true when n is zero.
-        return false;
+        return n == 0;
     }
 
     @Override
     public int size() {
         // TODO: Return the number of items currently in the stack.
-        return 0;
+        return n;
     }
 
     /**
@@ -39,7 +50,20 @@ public class ArrayStack<T> implements Stack<T> {
     public static boolean isValid(String s) {
         // TODO: Use an ArrayStack<Character> to check matching brackets. Push opening brackets;
         // for each closer, check that the most recent opener has the matching type.
-        return false;
+        ArrayStack<Character> stack = new ArrayStack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else if (c == ')' || c == '}' || c == ']') {
+                if (stack.isEmpty()) return false;
+                char top = stack.pop();
+                if (c == ')' && top != '(') return false;
+                if (c == '}' && top != '{') return false;
+                if (c == ']' && top != '[') return false;
+            }
+        }
+        return stack.isEmpty();
     }
 
     static void check(String label, Object actual, Object expected) {
